@@ -1,0 +1,38 @@
+version: '3'
+services:
+    worker:
+        image: ticksmith/impala-base:2.9.0
+        command :  "/usr/bin/start_impalad.sh"
+        env_file:
+            - ./env_file.env
+        depends_on:
+            - statestore
+    catalog:
+        image: ticksmith/impala-base:2.9.0
+        command :  "/usr/bin/start_catalogd.sh"
+        env_file:
+                - ./env_file.env
+        depends_on:
+            - metastore
+    statestore:
+        image: ticksmith/impala-base:2.9.0
+        command :  "/usr/bin/start_statestored.sh"
+        env_file:
+                - ./env_file.env
+        depends_on:
+            - catalog
+    metastore:
+        hostname: metastore
+        image: ticksmith/hive-metastore:2.1.0
+        env_file:
+                - ./env_file.env
+        depends_on:
+            - db
+    db:
+        image: mysql:5.7    
+        volumes:
+            - db:/var/lib/mysql
+        env_file: 
+                - ./env_file.env
+volumes:
+        db:

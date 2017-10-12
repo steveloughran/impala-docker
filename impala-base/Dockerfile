@@ -5,6 +5,7 @@ ADD start_impalad.sh /usr/bin/start_impalad.sh
 ADD start_catalogd.sh /usr/bin/start_catalogd.sh
 ADD start_statestored.sh /usr/bin/start_statestored.sh
 ADD wait_metastore.sh /usr/bin/wait_metastore.sh
+ADD hdfs-site.xml /etc/hadoop/conf.template/
 ADD impala.conf.template /etc/impala/impala.conf.template
 ENTRYPOINT  ["/entrypoint.sh"]
 
